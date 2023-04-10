@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+    --prim_font_color: #A4C6C8;
+    --button_bg_color: rgba(45, 65, 80, 0.5);
+    --button_bg_color_active: rgba(45, 65, 80, 1);
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    height: 100%;
+    width: 100%;
+    background-color: #23272A;
+}
+#numpad {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(180deg, rgba(0, 86, 134, 0.25) 0%, rgba(0, 0, 0, 0.25) 100%);
+    box-shadow: 0px 0px 25px #000000;
+    border-radius: 20px 20px 0px 0px;
+    padding: 2vw;
+}
+.row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.button {
+    border-radius: 20px;
+    background-color: var(--button_bg_color);
+    height: 20vw;
+    width: 20vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2vw;
+}
+.button:active {
+    background-color: var(--button_bg_color_active);
+}
+.button > p {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-style: normal;
+    font-weight: 10;
+    font-size: 10vw;
+    line-height: 39px;
+    display: flex;
+    align-items: center;
+    color: var(--prim_font_color);
+}
+.button_big {
+    height: 32vw;
+}
+
+#display {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 2vw;
+    top: 4vw;
+}
+#display_calculation {
+    color: var(--prim_font_color);
+    font-size: 10vw;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    max-width: 100vw;
+    overflow-x: scroll;
+}
+#display_result {
+    color: white;
+    font-size: 17.5vw;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    max-width: 100vw;
+    overflow-x: scroll;
+}
+    </style>
+    <title>Taschenrechner</title>
+</head>
+<body>
+    <div id="display">
+        <p id="display_calculation"></p>
+        <p id="display_result"></p>
+    </div>
+    <div id="numpad" onclick="refreshdisplay()">
+        <div class="row">
+            <div class="button" id="B_AC">
+                <p>AC</p>
+            </div>
+            <div class="button" id="B_7">
+                <p>7</p>
+            </div>
+            <div class="button" id="B_4">
+                <p>4</p>
+            </div>
+            <div class="button" id="B_1">
+                <p>1</p>
+            </div>
+            <div class="button" id="B_()">
+                <p>( )</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="button" id="B_/">
+                <p>/</p>
+            </div>
+            <div class="button" id="B_8">
+                <p>8</p>
+            </div>
+            <div class="button" id="B_5">
+                <p>5</p>
+            </div>
+            <div class="button" id="B_2">
+                <p>2</p>
+            </div>
+            <div class="button" id="B_0">
+                <p>0</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="button" id="B_*">
+                <p>*</p>
+            </div>
+            <div class="button" id="B_9">
+                <p>9</p>
+            </div>
+            <div class="button" id="B_6">
+                <p>6</p>
+            </div>
+            <div class="button" id="B_3">
+                <p>3</p>
+            </div>
+            <div class="button" id="B_,">
+                <p>,</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="button" id="B_delete">
+                <svg xmlns="http://www.w3.org/2000/svg" height="10vw" viewBox="0 96 960 960" width="10vw">
+                    <path fill="var(--prim_font_color)" d="m448 730 112-112 112 112 43-43-113-111 111-111-43-43-110 112-112-112-43 43 113 111-113 111 43 43ZM120 576l169-239q13-18 31-29.5t40-11.5h420q24.75 0 42.375 17.625T840 356v440q0 24.75-17.625 42.375T780 856H360q-22 0-40-11.5T289 815L120 576Zm75 0 154 220h431V356H349L195 576Zm585 0V356v440-220Z"/>
+                </svg>
+            </div>
+            <div class="button" id="B_-">
+                <p>-</p>
+            </div>
+            <div class="button button_big" id="B_+">
+                <p>+</p>
+            </div>
+            <div class="button button_big" id="B_=">
+                <p>=</p>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var calculation = "";
+document.getElementById("B_AC").addEventListener("click", function() {
+    calculation = "";
+    document.getElementById("display_result").innerHTML = ""
+});
+document.getElementById("B_delete").addEventListener("click", function() {
+    calculation = calculation.slice(0, -1);
+});
+document.getElementById("B_=").addEventListener("click", function() {
+    refreshdisplay()
+});
+document.getElementById("B_+").addEventListener("click", function() {
+    calculation = calculation +  "+";
+});
+document.getElementById("B_-").addEventListener("click", function() {
+    calculation = calculation + "-";
+});
+document.getElementById("B_*").addEventListener("click", function() {
+    calculation = calculation + "*";
+});
+document.getElementById("B_/").addEventListener("click", function() {
+    calculation = calculation + "/";
+});
+document.getElementById("B_,").addEventListener("click", function() {
+    calculation = calculation + ".";
+});
+var bracket = "closed"
+document.getElementById("B_()").addEventListener("click", function() {
+    if (bracket == "open") {
+        calculation = calculation + ")"
+        bracket = "closed"
+    }
+    else {
+        calculation = calculation + "("
+        bracket = "open"
+    }
+})
+document.getElementById("B_0").addEventListener("click", function() {
+    calculation = calculation + "0";
+});
+document.getElementById("B_1").addEventListener("click", function() {
+    calculation = calculation + "1";
+});
+document.getElementById("B_2").addEventListener("click", function() {
+    calculation = calculation + "2";
+});
+document.getElementById("B_3").addEventListener("click", function() {
+    calculation = calculation + "3";
+});
+document.getElementById("B_4").addEventListener("click", function() {
+    calculation = calculation + "4";
+});
+document.getElementById("B_5").addEventListener("click", function() {
+    calculation = calculation + "5";
+});
+document.getElementById("B_6").addEventListener("click", function() {
+    calculation = calculation + "6";
+});
+document.getElementById("B_7").addEventListener("click", function() {
+    calculation = calculation + "7";
+});
+document.getElementById("B_8").addEventListener("click", function() {
+    calculation = calculation + "8";
+});
+document.getElementById("B_9").addEventListener("click", function() {
+    calculation = calculation + "9";
+});
+
+function refreshdisplay() {
+    document.getElementById("display_calculation").innerHTML = calculation
+    if (!Number.isInteger(eval(calculation))) {
+        document.getElementById("display_result").innerHTML = "=" + eval(calculation).toFixed(5)
+    }
+    else {
+        document.getElementById("display_result").innerHTML = "=" + eval(calculation)
+    }
+}
+</script>
+</html>
+

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <title>Taschenrechner</title>
+</head>
+<body>
+    <div id="display">
+        <p id="display_calculation"></p>
+        <p id="display_result"></p>
+    </div>
+    <div id="numpad" onclick="refreshdisplay()">
+        <div class="row">
+            <div class="button" id="B_AC">
+                <p>AC</p>
+            </div>
+            <div class="button" id="B_7">
+                <p>7</p>
+            </div>
+            <div class="button" id="B_4">
+                <p>4</p>
+            </div>
+            <div class="button" id="B_1">
+                <p>1</p>
+            </div>
+            <div class="button" id="B_()">
+                <p>( )</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="button" id="B_/">
+                <p>/</p>
+            </div>
+            <div class="button" id="B_8">
+                <p>8</p>
+            </div>
+            <div class="button" id="B_5">
+                <p>5</p>
+            </div>
+            <div class="button" id="B_2">
+                <p>2</p>
+            </div>
+            <div class="button" id="B_0">
+                <p>0</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="button" id="B_*">
+                <p>*</p>
+            </div>
+            <div class="button" id="B_9">
+                <p>9</p>
+            </div>
+            <div class="button" id="B_6">
+                <p>6</p>
+            </div>
+            <div class="button" id="B_3">
+                <p>3</p>
+            </div>
+            <div class="button" id="B_,">
+                <p>,</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="button" id="B_delete">
+                <svg xmlns="http://www.w3.org/2000/svg" height="10vw" viewBox="0 96 960 960" width="10vw">
+                    <path fill="var(--prim_font_color)" d="m448 730 112-112 112 112 43-43-113-111 111-111-43-43-110 112-112-112-43 43 113 111-113 111 43 43ZM120 576l169-239q13-18 31-29.5t40-11.5h420q24.75 0 42.375 17.625T840 356v440q0 24.75-17.625 42.375T780 856H360q-22 0-40-11.5T289 815L120 576Zm75 0 154 220h431V356H349L195 576Zm585 0V356v440-220Z"/>
+                </svg>
+            </div>
+            <div class="button" id="B_-">
+                <p>-</p>
+            </div>
+            <div class="button button_big" id="B_+">
+                <p>+</p>
+            </div>
+            <div class="button button_big" id="B_=">
+                <p>=</p>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./app.js"></script>
+</html>
+
